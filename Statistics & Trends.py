@@ -89,6 +89,37 @@ def bar_plot(data, title, x, y, a):
     #return statement is used at the the end of a function
     return
 
+def line_plot(data, title, x, y, a):
+    
+    '''
+    This function is used for plotting bar graph
+    
+    Parameters
+    ----------
+    data : Transposed dataset from filter_data()
+    title : Title name
+    x : xlabel
+    y : ylabel
+    a : Xticks
+    
+    '''
+    #To plot line graph
+    data.plot.line(figsize=(50,30), fontsize=36, linewidth=4.0)
+    #Setting yticks
+    plt.yticks(a)
+    #Setting title and fontsize
+    plt.title(title, fontsize=50)
+    #Setting xlabel and fontsize
+    plt.xlabel(x,fontsize=50)
+    #Setting ylabel and fontsize
+    plt.ylabel(y, fontsize=50)
+    plt.legend(fontsize=50)
+    #saving line graph as image
+    plt.savefig(title + '.png')
+    plt.show()
+    #return statement is used at the the end of a function
+    return
+
 #Calling the dataset
 data =  read_data("Climate.csv")
 
@@ -103,6 +134,16 @@ data2, data3 = filter_data(data, 'Indicator Name','Cereal yield (kg per hectare)
 #plotting bar graph with the filtered data in bar_plot() function
 bar_plot(data2, 'Cereal yield', 'Countries', 'kg per hectare', x1)
 
+#Setting countries and years as list for line graph
+country2= ['Brazil', 'China', 'Mexico', 'Uruguay', 'Zimbabwe']
+year2 = ['1971','1981','1991','2001','2011']
+#Setting xticks values as list
+x2 = [500,1000,1500,2000,2500,3000,3500]
+#calling filter_data() function and store the return values in data4 and data5
+data4, data5 = filter_data(data, 'Indicator Name','Electric power consumption (kWh per capita)',country2,year2)
+#plotting line graph with the transposed data in line_plot() function
+line_plot(data5, 'Electric power consumption', 'Year', 'kWh per capita', x2)
+
 
 #Setting countries and xticks values as list for bar graph 
 x3 = [20, 40, 60, 80, 100]
@@ -113,6 +154,11 @@ data6, data7 = filter_data(data, 'Indicator Name','Urban population (% of total 
 bar_plot(data6, 'Urban population ', 'Countries', '% of total population', x3)
 
 
+country4= ['Bangladesh', 'Guyana', 'India','Kenya', 'Lesotho']
+#calling filter_data() function and store the return values in data8 and data9
+data8, data9 = filter_data(data, 'Indicator Name','Agriculture, forestry, and fishing, value added (% of GDP)',country4,year1)
+#plotting line graph with the filtered data in line_plot() function
+line_plot(data9, 'Agriculture, forestry, and fishing, value added', 'Year', '% of GDP', x3)
 
 
 
