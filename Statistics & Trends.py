@@ -7,6 +7,7 @@ Created on Wed Apr  5 22:07:20 2023
 """
 
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def read_data(filename):
     
@@ -57,6 +58,72 @@ def filter_data(df, col, value, country, year):
     #Returning both data
     return df1,df2
 
+def bar_plot(data, title, x, y, a):
+    
+    '''
+    This function is used for plotting bar graph
+    
+    Parameters
+    ----------
+    data : Filtered dataset from filter_data()
+    title : Title name
+    x : xlabel
+    y : ylabel
+    a : Xticks
+    
+    '''
+    #To plot bar graph
+    ax = data.plot.bar(x='Country Name', rot=0, figsize=(50,30), fontsize=50)
+    #Setting yticks
+    ax.set_yticks(a)
+    #Setting title and fontsize
+    ax.set_title(title, fontsize=50)
+    #Setting xlabel and fontsize
+    ax.set_xlabel(x, fontsize=50)
+    #Setting ylabel and fontsize
+    ax.set_ylabel(y, fontsize=50)
+    ax.legend(fontsize=50)
+    #saving bar graph as image
+    plt.savefig(title + '.png')
+    plt.show()
+    #return statement is used at the the end of a function
+    return
 
 #Calling the dataset
 data =  read_data("Climate.csv")
+
+
+#Setting countries and years as list for bar graph
+country1= ['Brazil','India','Mexico','Nepal','Uruguay']
+year1 = ['1961', '1971', '1981', '1991', '2001','2011']
+#Setting xticks values as list
+x1 = [1000, 2000, 3000, 4000, 5000]
+#calling filter_data() function and store the return values in data2 and data3
+data2, data3 = filter_data(data, 'Indicator Name','Cereal yield (kg per hectare)',country1,year1)
+#plotting bar graph with the filtered data in bar_plot() function
+bar_plot(data2, 'Cereal yield', 'Countries', 'kg per hectare', x1)
+
+
+#Setting countries and xticks values as list for bar graph 
+x3 = [20, 40, 60, 80, 100]
+country3= ['Andorra','Austria','China','Korea, Rep.','Libya']
+#calling filter_data() function and store the return values in data6 and data7
+data6, data7 = filter_data(data, 'Indicator Name','Urban population (% of total population)',country3,year1)
+#plotting bar graph with the filtered data in bar_plot() function
+bar_plot(data6, 'Urban population ', 'Countries', '% of total population', x3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
