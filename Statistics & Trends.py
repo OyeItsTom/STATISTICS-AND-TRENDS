@@ -9,6 +9,7 @@ Created on Wed Apr  5 22:07:20 2023
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import scipy.stats as stats
 
 def read_data(filename):
     
@@ -236,6 +237,25 @@ datah1 = stat_data(data,'Country Name', 'India', yearh , ind)
 heat_map(datah1,'India')
 
 
+#Setting years and Indicator values as list for .describe()
+start = 1990
+end = 2013
+yeard = [str(i) for i in range(start, end+1)]
+Indicator = ['Population, total','CO2 emissions (kt)','Cereal yield (kg per hectare)','Forest area (sq. km)','Agricultural land (sq. km)']
+#calling stat_data() function and store the return values in datahd
+datad = stat_data(data,'Country Name', 'China', yeard , Indicator)
+#peforming .describe()
+summary_stats = datad.describe()
+#finding skewness
+skewness = stats.skew(datad['Population, total'])
+#finding kurtosis
+kurtosis = datad['CO2 emissions (kt)'].kurtosis()
+#printing both data
+print('Skewness of Population in China : ', skewness)
+print('kurtosis of CO2 emissions  in China : ', kurtosis)
+
+#Saving the .describe() data to a csv file
+summary_stats.to_csv('China Summary Statistics.csv')
 
 
 
