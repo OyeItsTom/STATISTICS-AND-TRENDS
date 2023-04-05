@@ -8,6 +8,7 @@ Created on Wed Apr  5 22:07:20 2023
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 def read_data(filename):
     
@@ -158,6 +159,26 @@ def line_plot(data, title, x, y, a):
     #return statement is used at the the end of a function
     return
 
+def heat_map(data,country):
+    
+    '''
+    Parameters
+    ----------
+    data : Filtered dataset from stat_data() function
+    country : To select a country
+
+    '''
+    #Setting figure size to plot heatmap
+    plt.figure(figsize=(20,18))
+    #plotting heatmap
+    heatmap = sns.heatmap(data.corr(), annot=True, cmap="YlGnBu")
+    #Setting country name as title for heatmap
+    heatmap.set_title(country)
+    #saving heatmap as image
+    plt.savefig(country+".png", dpi=300, bbox_inches='tight')
+    #return statement is used at the the end of a function
+    return 
+
 #Calling the dataset
 data =  read_data("Climate.csv")
 
@@ -199,6 +220,20 @@ data8, data9 = filter_data(data, 'Indicator Name','Agriculture, forestry, and fi
 line_plot(data9, 'Agriculture, forestry, and fishing, value added', 'Year', '% of GDP', x3)
 
 
+#Setting years and Indicator values as list for heatmap
+yearh = ['1990', '1995', '2000', '2005', '2010']
+ind = ['Urban population (% of total population)','Electric power consumption (kWh per capita)','Forest area (% of land area)','Arable land (% of land area)','Agriculture, forestry, and fishing, value added (% of GDP)','Cereal yield (kg per hectare)',]
+#calling stat_data() function and store the return values in datah
+datah = stat_data(data,'Country Name', 'China', yearh , ind)
+#plotting heatmap for China
+heat_map(datah,'China')
+
+
+ind = ['Urban population (% of total population)','Electric power consumption (kWh per capita)','Forest area (% of land area)','Arable land (% of land area)','Agriculture, forestry, and fishing, value added (% of GDP)','Cereal yield (kg per hectare)',]
+#calling stat_data() function and store the return values in datah1
+datah1 = stat_data(data,'Country Name', 'India', yearh , ind)
+#plotting heatmap for India
+heat_map(datah1,'India')
 
 
 
