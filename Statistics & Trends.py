@@ -58,6 +58,44 @@ def filter_data(df, col, value, country, year):
     #Returning both data
     return df1,df2
 
+def stat_data(df, col, value, year, ind):
+    
+    '''
+    This function is used to filter data for statistical analysis
+    
+    Parameters
+    ----------
+    df : The dataset received with the data_reading function()
+    col : Column name
+    value : Value in the selected column
+    years : Selected years
+    ind : Selected indicator
+    
+    Returns
+    -------
+    df3 : Filtered dataset
+    
+    '''
+    #Grouping the data with column
+    df3 = df.groupby(col, group_keys= True)
+    #Selecting a value in the grouped data
+    df3 = df3.get_group(value)
+    #Reseting the index
+    df3 = df3.reset_index()
+    #Set Indicator Name as the index
+    df3.set_index('Indicator Name', inplace=True)
+    #Filtering data by years
+    df3 = df3.loc[:, year]
+    #Transpose the data
+    df3 = df3.transpose()
+    #Filtering data with selected indicator
+    df3 = df3.loc[:,ind ]
+    #Dropping the NA values
+    df3 = df3.dropna(axis = 1)
+    #Retruning the data
+    return df3
+
+
 def bar_plot(data, title, x, y, a):
     
     '''
